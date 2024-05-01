@@ -1,16 +1,16 @@
-from utils.graphing import plot
+from utils.graphing import plot # importing from utils folder
 
-import cv2
-import math
-import mediapipe as mp
-mp_drawing = mp.solutions.drawing_utils
+import cv2 # compvis library
+import math # self explanitory
+import mediapipe as mp # for recognizing hands
+mp_drawing = mp.solutions.drawing_utils # setups
 mp_hands = mp.solutions.hands
 
 def executable(camera):
-    xCoords = []
-    yCoords = []
+    xCoords = [] # current x-coords of hand
+    yCoords = [] # current y-coords of hand
 
-    hand_classification_dict = {
+    hand_classification_dict = { # changes the number value to its name
         0: "WRIST",
         1: "THUMB_CMC",
         2: "THUMB_MPC",
@@ -34,7 +34,7 @@ def executable(camera):
         20: "RING_FINGER_TIP"
     }
 
-    cap = cv2.VideoCapture(camera)
+    cap = cv2.VideoCapture(camera) # start capture through camera
     with (
         mp_hands.Hands(
             min_detection_confidence=0.5,
@@ -47,18 +47,17 @@ def executable(camera):
           print("Empty Camera Frame (no success).")
           continue
 
-        image = cv2.cvtColor(cv2.flip(image, 1), cv2.COLOR_BGR2RGB)
-        # To improve performance, optionally mark the image as not writeable to
-        # pass by reference.
+        image = cv2.cvtColor(cv2.flip(image, 1), cv2.COLOR_BGR2RGB) # flip camera so its mirrored
+        # mark the image as not writeable to pass by reference (if performance issues)
         image.flags.writeable = False
         results = hands.process(image)
         image_height, image_width, _ = image.shape
-        # Draw the hand annotations on the image.
+        # Draw the hand annotations on the image
         image.flags.writeable = True
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
         if results.multi_hand_landmarks:
           for hand_landmarks in results.multi_hand_landmarks:
-            xCoords = []
+            xCoords = [] # cleans them for another update
             yCoords = []
             # Gets all point location coords
             print(math.floor(hand_landmarks.landmark[0].x * image_width))
