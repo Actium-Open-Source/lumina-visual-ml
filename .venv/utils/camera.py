@@ -1,4 +1,6 @@
 from utils.graphing import plot # importing from utils folder
+from get_image import get_image
+
 
 import cv2 # compvis library
 import math # self explanitory
@@ -74,5 +76,7 @@ def executable(camera):
         cv2.imshow('Registering Hands', image) # Window Name, stream(image)
         if cv2.waitKey(5) & 0xFF == 27: # `ESC` key
           break
+        if cv2.waitKey(5) & 0xFF == ord('c'):
+            print("Got coordinates")
+            get_image(xCoords, yCoords) # prints final
     cap.release()
-    plot(xCoords, yCoords) # prints final
