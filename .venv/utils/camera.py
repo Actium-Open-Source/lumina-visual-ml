@@ -64,7 +64,7 @@ def executable(camera):
             for ids, landmrk in enumerate(hand_landmarks.landmark):
                 # print(ids, landmrk)
                 cx, cy = landmrk.x * image_width, landmrk.y*image_height
-                print(hand_classification_dict[ids], cx, cy)
+                print(hand_classification_dict[ids], cx, cy) # could comment out
                 # print (ids, cx, cy)
                 xCoords.append(cx)
                 yCoords.append(cy)
